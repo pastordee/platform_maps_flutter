@@ -227,7 +227,34 @@ class _PlatformMapState extends State<PlatformMap> {
             widget.minMaxZoomPreference.appleMapsZoomPreference,
       );
     } else {
-      return const Text("Platform not yet implemented");
+      return google_maps.GoogleMap(
+        initialCameraPosition:
+            widget.initialCameraPosition.googleMapsCameraPosition,
+        compassEnabled: widget.compassEnabled,
+        mapType: _getGoogleMapType(),
+        padding: widget.padding,
+        markers: Marker.toGoogleMapsMarkerSet(widget.markers),
+        polylines: Polyline.toGoogleMapsPolylines(widget.polylines),
+        polygons: Polygon.toGoogleMapsPolygonSet(widget.polygons),
+        circles: Circle.toGoogleMapsCircleSet(widget.circles),
+        gestureRecognizers: widget.gestureRecognizers,
+        onCameraIdle: widget.onCameraIdle,
+        myLocationButtonEnabled: widget.myLocationButtonEnabled,
+        myLocationEnabled: widget.myLocationEnabled,
+        onCameraMoveStarted: widget.onCameraMoveStarted,
+        tiltGesturesEnabled: widget.tiltGesturesEnabled,
+        rotateGesturesEnabled: widget.rotateGesturesEnabled,
+        zoomControlsEnabled: widget.zoomControlsEnabled,
+        zoomGesturesEnabled: widget.zoomGesturesEnabled,
+        scrollGesturesEnabled: widget.scrollGesturesEnabled,
+        onMapCreated: _onMapCreated,
+        onCameraMove: _onCameraMove,
+        onTap: _onTap,
+        onLongPress: _onLongPress,
+        trafficEnabled: widget.trafficEnabled,
+        minMaxZoomPreference:
+            widget.minMaxZoomPreference.googleMapsZoomPreference,
+      );
     }
   }
 
