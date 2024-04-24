@@ -16,7 +16,7 @@ class BitmapDescriptor {
     } else if (UniversalPlatform.isAndroid) {
       return BitmapDescriptor._(google_maps.BitmapDescriptor.defaultMarker);
     }
-    return null;
+    return BitmapDescriptor._(google_maps.BitmapDescriptor.defaultMarker);;
   }
 
   /// Creates a [BitmapDescriptor] from an asset image.
