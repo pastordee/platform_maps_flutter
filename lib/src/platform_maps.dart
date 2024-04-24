@@ -1,12 +1,11 @@
-part of platform_maps_flutter;
+part of '../platform_maps_flutter.dart';
 
-typedef void MapCreatedCallback(PlatformMapController controller);
+typedef MapCreatedCallback = void Function(PlatformMapController controller);
 
-typedef void CameraPositionCallback(CameraPosition position);
+typedef CameraPositionCallback = void Function(CameraPosition position);
 
 class PlatformMap extends StatefulWidget {
-  const PlatformMap({
-    Key? key,
+  const PlatformMap({Key? key, 
     required this.initialCameraPosition,
     this.onMapCreated,
     this.gestureRecognizers = const <Factory<OneSequenceGestureRecognizer>>{},
@@ -164,14 +163,14 @@ class PlatformMap extends StatefulWidget {
   /// were not claimed by any other gesture recognizer.
   final Set<Factory<OneSequenceGestureRecognizer>> gestureRecognizers;
   @override
-  _PlatformMapState createState() => _PlatformMapState();
+  State<PlatformMap> createState() => _PlatformMapState();
 }
 
 class _PlatformMapState extends State<PlatformMap> {
   @override
   Widget build(BuildContext context) {
     if (UniversalPlatform.isAndroid) {
-      return googleMaps.GoogleMap(
+      return google_maps.GoogleMap(
         initialCameraPosition:
             widget.initialCameraPosition.googleMapsCameraPosition,
         compassEnabled: widget.compassEnabled,
@@ -200,7 +199,7 @@ class _PlatformMapState extends State<PlatformMap> {
             widget.minMaxZoomPreference.googleMapsZoomPreference,
       );
     } else if (UniversalPlatform.isIOS) {
-      return appleMaps.AppleMap(
+      return apple_maps.AppleMap(
         initialCameraPosition:
             widget.initialCameraPosition.appleMapsCameraPosition,
         compassEnabled: widget.compassEnabled,
@@ -228,34 +227,7 @@ class _PlatformMapState extends State<PlatformMap> {
             widget.minMaxZoomPreference.appleMapsZoomPreference,
       );
     } else {
-      return googleMaps.GoogleMap(
-        initialCameraPosition:
-            widget.initialCameraPosition.googleMapsCameraPosition,
-        compassEnabled: widget.compassEnabled,
-        mapType: _getGoogleMapType(),
-        padding: widget.padding,
-        markers: Marker.toGoogleMapsMarkerSet(widget.markers),
-        polylines: Polyline.toGoogleMapsPolylines(widget.polylines),
-        polygons: Polygon.toGoogleMapsPolygonSet(widget.polygons),
-        circles: Circle.toGoogleMapsCircleSet(widget.circles),
-        gestureRecognizers: widget.gestureRecognizers,
-        onCameraIdle: widget.onCameraIdle,
-        myLocationButtonEnabled: widget.myLocationButtonEnabled,
-        myLocationEnabled: widget.myLocationEnabled,
-        onCameraMoveStarted: widget.onCameraMoveStarted,
-        tiltGesturesEnabled: widget.tiltGesturesEnabled,
-        rotateGesturesEnabled: widget.rotateGesturesEnabled,
-        zoomControlsEnabled: widget.zoomControlsEnabled,
-        zoomGesturesEnabled: widget.zoomGesturesEnabled,
-        scrollGesturesEnabled: widget.scrollGesturesEnabled,
-        onMapCreated: _onMapCreated,
-        onCameraMove: _onCameraMove,
-        onTap: _onTap,
-        onLongPress: _onLongPress,
-        trafficEnabled: widget.trafficEnabled,
-        minMaxZoomPreference:
-            widget.minMaxZoomPreference.googleMapsZoomPreference,
-      );
+      return const Text("Platform not yet implemented");
     }
   }
 
@@ -267,13 +239,13 @@ class _PlatformMapState extends State<PlatformMap> {
     if (UniversalPlatform.isIOS) {
       widget.onCameraMove?.call(
         CameraPosition.fromAppleMapCameraPosition(
-          cameraPosition as appleMaps.CameraPosition,
+          cameraPosition as apple_maps.CameraPosition,
         ),
       );
     } else if (UniversalPlatform.isAndroid) {
       widget.onCameraMove?.call(
         CameraPosition.fromGoogleMapCameraPosition(
-          cameraPosition as googleMaps.CameraPosition,
+          cameraPosition as google_maps.CameraPosition,
         ),
       );
     }
@@ -281,42 +253,43 @@ class _PlatformMapState extends State<PlatformMap> {
 
   void _onTap(dynamic position) {
     if (UniversalPlatform.isIOS) {
-      widget.onTap?.call(LatLng._fromAppleLatLng(position as appleMaps.LatLng));
+      widget.onTap
+          ?.call(LatLng._fromAppleLatLng(position as apple_maps.LatLng));
     } else if (UniversalPlatform.isAndroid) {
       widget.onTap
-          ?.call(LatLng._fromGoogleLatLng(position as googleMaps.LatLng));
+          ?.call(LatLng._fromGoogleLatLng(position as google_maps.LatLng));
     }
   }
 
   void _onLongPress(dynamic position) {
     if (UniversalPlatform.isIOS) {
       widget.onLongPress
-          ?.call(LatLng._fromAppleLatLng(position as appleMaps.LatLng));
+          ?.call(LatLng._fromAppleLatLng(position as apple_maps.LatLng));
     } else if (UniversalPlatform.isAndroid) {
       widget.onLongPress
-          ?.call(LatLng._fromGoogleLatLng(position as googleMaps.LatLng));
+          ?.call(LatLng._fromGoogleLatLng(position as google_maps.LatLng));
     }
   }
 
-  appleMaps.MapType _getAppleMapType() {
+  apple_maps.MapType _getAppleMapType() {
     if (widget.mapType == MapType.normal) {
-      return appleMaps.MapType.standard;
+      return apple_maps.MapType.standard;
     } else if (widget.mapType == MapType.satellite) {
-      return appleMaps.MapType.satellite;
+      return apple_maps.MapType.satellite;
     } else if (widget.mapType == MapType.hybrid) {
-      return appleMaps.MapType.hybrid;
+      return apple_maps.MapType.hybrid;
     }
-    return appleMaps.MapType.standard;
+    return apple_maps.MapType.standard;
   }
 
-  googleMaps.MapType _getGoogleMapType() {
+  google_maps.MapType _getGoogleMapType() {
     if (widget.mapType == MapType.normal) {
-      return googleMaps.MapType.normal;
+      return google_maps.MapType.normal;
     } else if (widget.mapType == MapType.satellite) {
-      return googleMaps.MapType.satellite;
+      return google_maps.MapType.satellite;
     } else if (widget.mapType == MapType.hybrid) {
-      return googleMaps.MapType.hybrid;
+      return google_maps.MapType.hybrid;
     }
-    return googleMaps.MapType.normal;
+    return google_maps.MapType.normal;
   }
 }
