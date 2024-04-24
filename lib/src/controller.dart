@@ -21,10 +21,10 @@ class PlatformMapController {
   ///   * [hideMarkerInfoWindow] to hide the Info Window.
   ///   * [isMarkerInfoWindowShown] to check if the Info Window is showing.
   Future<void> showMarkerInfoWindow(MarkerId markerId) {
-    if (Platform.isAndroid) {
+    if (UniversalPlatform.isAndroid) {
       return googleController!
           .showMarkerInfoWindow(markerId.googleMapsMarkerId);
-    } else if (Platform.isIOS) {
+    } else if (UniversalPlatform.isIOS) {
       return appleController!
           .showMarkerInfoWindow(markerId.appleMapsAnnoationId);
     }
@@ -40,10 +40,10 @@ class PlatformMapController {
   ///   * [showMarkerInfoWindow] to show the Info Window.
   ///   * [isMarkerInfoWindowShown] to check if the Info Window is showing.
   Future<void> hideMarkerInfoWindow(MarkerId markerId) {
-    if (Platform.isAndroid) {
+    if (UniversalPlatform.isAndroid) {
       return googleController!
           .hideMarkerInfoWindow(markerId.googleMapsMarkerId);
-    } else if (Platform.isIOS) {
+    } else if (UniversalPlatform.isIOS) {
       return appleController!
           .hideMarkerInfoWindow(markerId.appleMapsAnnoationId);
     }
@@ -59,10 +59,10 @@ class PlatformMapController {
   ///   * [showMarkerInfoWindow] to show the Info Window.
   ///   * [hideMarkerInfoWindow] to hide the Info Window.
   Future<bool> isMarkerInfoWindowShown(MarkerId markerId) async {
-    if (Platform.isAndroid) {
+    if (UniversalPlatform.isAndroid) {
       return googleController!
           .isMarkerInfoWindowShown(markerId.googleMapsMarkerId);
-    } else if (Platform.isIOS) {
+    } else if (UniversalPlatform.isIOS) {
       return await appleController!
               .isMarkerInfoWindowShown(markerId.appleMapsAnnoationId) ??
           false;
@@ -75,9 +75,9 @@ class PlatformMapController {
   /// The returned [Future] completes after the change has been started on the
   /// platform side.
   Future<void> animateCamera(cameraUpdate) async {
-    if (Platform.isIOS) {
+    if (UniversalPlatform.isIOS) {
       return this.appleController!.animateCamera(cameraUpdate);
-    } else if (Platform.isAndroid) {
+    } else if (UniversalPlatform.isAndroid) {
       return this.googleController!.animateCamera(cameraUpdate);
     }
     throw ('Platform not supported.');
@@ -88,9 +88,9 @@ class PlatformMapController {
   /// The returned [Future] completes after the change has been made on the
   /// platform side.
   Future<void> moveCamera(cameraUpdate) async {
-    if (Platform.isIOS) {
+    if (UniversalPlatform.isIOS) {
       return this.appleController!.moveCamera(cameraUpdate);
-    } else if (Platform.isAndroid) {
+    } else if (UniversalPlatform.isAndroid) {
       return this.googleController!.moveCamera(cameraUpdate);
     }
   }
@@ -98,11 +98,11 @@ class PlatformMapController {
   /// Return [LatLngBounds] defining the region that is visible in a map.
   Future<LatLngBounds> getVisibleRegion() async {
     late LatLngBounds _bounds;
-    if (Platform.isIOS) {
+    if (UniversalPlatform.isIOS) {
       appleMaps.LatLngBounds appleBounds =
           await this.appleController!.getVisibleRegion();
       _bounds = LatLngBounds._fromAppleLatLngBounds(appleBounds);
-    } else if (Platform.isAndroid) {
+    } else if (UniversalPlatform.isAndroid) {
       googleMaps.LatLngBounds googleBounds =
           await this.googleController!.getVisibleRegion();
       _bounds = LatLngBounds._fromGoogleLatLngBounds(googleBounds);
@@ -112,9 +112,9 @@ class PlatformMapController {
 
   /// Returns the image bytes of the map
   Future<Uint8List?> takeSnapshot() async {
-    if (Platform.isIOS) {
+    if (UniversalPlatform.isIOS) {
       return this.appleController!.takeSnapshot();
-    } else if (Platform.isAndroid) {
+    } else if (UniversalPlatform.isAndroid) {
       return this.googleController!.takeSnapshot();
     }
   }

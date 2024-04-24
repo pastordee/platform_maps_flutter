@@ -170,7 +170,7 @@ class PlatformMap extends StatefulWidget {
 class _PlatformMapState extends State<PlatformMap> {
   @override
   Widget build(BuildContext context) {
-    if (Platform.isAndroid) {
+    if (UniversalPlatform.isAndroid) {
       return googleMaps.GoogleMap(
         initialCameraPosition:
             widget.initialCameraPosition.googleMapsCameraPosition,
@@ -199,7 +199,7 @@ class _PlatformMapState extends State<PlatformMap> {
         minMaxZoomPreference:
             widget.minMaxZoomPreference.googleMapsZoomPreference,
       );
-    } else if (Platform.isIOS) {
+    } else if (UniversalPlatform.isIOS) {
       return appleMaps.AppleMap(
         initialCameraPosition:
             widget.initialCameraPosition.appleMapsCameraPosition,
@@ -237,13 +237,13 @@ class _PlatformMapState extends State<PlatformMap> {
   }
 
   void _onCameraMove(dynamic cameraPosition) {
-    if (Platform.isIOS) {
+    if (UniversalPlatform.isIOS) {
       widget.onCameraMove?.call(
         CameraPosition.fromAppleMapCameraPosition(
           cameraPosition as appleMaps.CameraPosition,
         ),
       );
-    } else if (Platform.isAndroid) {
+    } else if (UniversalPlatform.isAndroid) {
       widget.onCameraMove?.call(
         CameraPosition.fromGoogleMapCameraPosition(
           cameraPosition as googleMaps.CameraPosition,
@@ -253,19 +253,19 @@ class _PlatformMapState extends State<PlatformMap> {
   }
 
   void _onTap(dynamic position) {
-    if (Platform.isIOS) {
+    if (UniversalPlatform.isIOS) {
       widget.onTap?.call(LatLng._fromAppleLatLng(position as appleMaps.LatLng));
-    } else if (Platform.isAndroid) {
+    } else if (UniversalPlatform.isAndroid) {
       widget.onTap
           ?.call(LatLng._fromGoogleLatLng(position as googleMaps.LatLng));
     }
   }
 
   void _onLongPress(dynamic position) {
-    if (Platform.isIOS) {
+    if (UniversalPlatform.isIOS) {
       widget.onLongPress
           ?.call(LatLng._fromAppleLatLng(position as appleMaps.LatLng));
-    } else if (Platform.isAndroid) {
+    } else if (UniversalPlatform.isAndroid) {
       widget.onLongPress
           ?.call(LatLng._fromGoogleLatLng(position as googleMaps.LatLng));
     }
