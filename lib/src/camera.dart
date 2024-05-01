@@ -137,6 +137,8 @@ class CameraUpdate {
       return apple_maps.CameraUpdate.zoomIn();
     } else if (UniversalPlatform.isAndroid) {
       return google_maps.CameraUpdate.zoomIn();
+    }else{
+      return google_maps.CameraUpdate.zoomIn();
     }
   }
 
@@ -157,6 +159,8 @@ class CameraUpdate {
     if (UniversalPlatform.isIOS) {
       return apple_maps.CameraUpdate.zoomTo(zoom);
     } else if (UniversalPlatform.isAndroid) {
+      return google_maps.CameraUpdate.zoomTo(zoom);
+    }else{
       return google_maps.CameraUpdate.zoomTo(zoom);
     }
   }

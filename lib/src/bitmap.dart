@@ -46,6 +46,13 @@ class BitmapDescriptor {
         bundle: bundle,
         package: package,
       );
+    }else if (UniversalPlatform.isWeb) {
+      bitmap = await google_maps.BitmapDescriptor.fromAssetImage(
+        configuration,
+        assetName,
+        bundle: bundle,
+        package: package,
+      );
     }
     return BitmapDescriptor._(bitmap);
   }
@@ -55,7 +62,7 @@ class BitmapDescriptor {
   static BitmapDescriptor fromBytes(Uint8List byteData) {
     var bitmap = UniversalPlatform.isAndroid
         ? google_maps.BitmapDescriptor.fromBytes(byteData)
-        : apple_maps.BitmapDescriptor.fromBytes(byteData);
+        : UniversalPlatform.isWeb ?google_maps.BitmapDescriptor.fromBytes(byteData):apple_maps.BitmapDescriptor.fromBytes(byteData);
     return BitmapDescriptor._(bitmap);
   }
 }
