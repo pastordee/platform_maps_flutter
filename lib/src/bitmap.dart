@@ -16,7 +16,7 @@ class BitmapDescriptor {
     } else if (UniversalPlatform.isAndroid) {
       return BitmapDescriptor._(google_maps.BitmapDescriptor.defaultMarker);
     }
-    return BitmapDescriptor._(google_maps.BitmapDescriptor.defaultMarker);;
+    return BitmapDescriptor._(google_maps.BitmapDescriptor.defaultMarker);
   }
 
   /// Creates a [BitmapDescriptor] from an asset image.
@@ -40,14 +40,14 @@ class BitmapDescriptor {
         package: package,
       );
     } else if (UniversalPlatform.isAndroid) {
-      bitmap = await google_maps.BitmapDescriptor.fromAssetImage(
+      bitmap = await google_maps.BitmapDescriptor.asset(
         configuration,
         assetName,
         bundle: bundle,
         package: package,
       );
     }else if (UniversalPlatform.isWeb) {
-      bitmap = await google_maps.BitmapDescriptor.fromAssetImage(
+      bitmap = await google_maps.BitmapDescriptor.asset(
         configuration,
         assetName,
         bundle: bundle,
@@ -61,8 +61,8 @@ class BitmapDescriptor {
   /// as PNG.
   static BitmapDescriptor fromBytes(Uint8List byteData) {
     var bitmap = UniversalPlatform.isAndroid
-        ? google_maps.BitmapDescriptor.fromBytes(byteData)
-        : UniversalPlatform.isWeb ?google_maps.BitmapDescriptor.fromBytes(byteData):apple_maps.BitmapDescriptor.fromBytes(byteData);
+        ? google_maps.BitmapDescriptor.bytes(byteData)
+        : UniversalPlatform.isWeb ?google_maps.BitmapDescriptor.bytes(byteData):apple_maps.BitmapDescriptor.fromBytes(byteData);
     return BitmapDescriptor._(bitmap);
   }
 }
