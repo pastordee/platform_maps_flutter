@@ -1,6 +1,5 @@
 library platform_maps_flutter;
 
-import 'dart:io';
 
 import 'package:apple_maps_flutter/apple_maps_flutter.dart' as apple_maps;
 import 'package:flutter/foundation.dart';
